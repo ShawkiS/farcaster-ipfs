@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Farcaster-IPFS</title>
+	<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-800">
+	<div class="container max-w-md mx-auto py-20 text-white">
+		<h1 class="text-8xl text-green-400">
+			Farcaster
+		</h1>
+		<h1 class="text-8xl pl-40">-IPFS</h1>
+      <% if (!user) { %>
+    		<div class="mt-20 mb-10 justify-center flex">
+          
+			<button id="login" class="justify-self-center mt-2 bg-blue-600 hover:bg-blue-800 text-white font-bold p-2 px-20 text-3xl rounded">Login</button>
+    </div>
+      <% } else{ %>
+    <form action="/cast" method="post">
+        <textarea id="textvalue" placeholder="Only cast good vibes please!" class="resize border flex-1 mt-5 w-full appearance-none border border-transparent w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-md rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-800 focus:border-transparent"></textarea>
+        <input id="text" type="hidden" name="text" />
+
+              <button class="float-right mt-4 bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded" id="submit" type="submit">Cast</button>
+    </form>
+              <% } %>
+            		<div class="mb-10 mt-20 justify-center flex">
+                  <form action='/refresh' method="get">
+			<input value='Refresh' type='submit' id="Refersh" class="justify-self-center mt-2 bg-green-500 hover:bg-green-600 text-white font-bold p-2 px-20 text-sm rounded">
+                    </submit>
+    </div>
+
+    <p class="mt-5">CIDs History:</p>
+            <ul class="mt-5">
+   <% ipfsCids.forEach(({ key, directoryCid, pageCid, directoryCidLink, pageCidLink }) => { %>
+      <li class="mt-5">
+        <p class="text-xs"><%= key %></p>
+      
+        <p class="mt-2 text-md">
+           CID: <a target="_blank" href=<%= directoryCidLink %>>
+          <%= directoryCid %>
+         </a>
+             </p>
+           <p class="mt-2 text-md">
+         Web page: <a target="_blank" href=<%= pageCidLink %>>
+          <%= pageCid %>
+         </a>
+             </p>
+        </li> 
+ <% }); %>
+  
+    </ul>
+  <script>
+      
+    
+    const submit = document.getElementById('submit');
+                       console.log(submit)
+
+  submit.onclick = function() {
+    var result = document.getElementById('textvalue').value.replace(/\n\r?/g, '<br />');
+    document.getElementById('text').value = result;
+    console.log(result);
+  }
+    console.log("Hello world!")
+const button = document.getElementById('login');
+  button.onclick = function() {
+    window.addEventListener('message', authComplete);
+
+    var h = 500;
+		var w = 350;
+		var left = (screen.width / 2) - ( w / 2);
+		var top = (screen.height / 2) - (h / 2);
+
+    var authWindow = window.open(
+      'https://repl.it/auth_with_repl_site?domain='+location.host,
+      '_blank',
+      'modal =yes, toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left)
+
+    function authComplete(e) {
+      console.log(e)
+      if (e.data !== 'auth_complete') {
+        return;
+      }
+
+      window.removeEventListener('message', authComplete);
+
+      authWindow.close();
+      location.reload();
+    }
+  }
+
+  </script>
+
+</body>
+</html>

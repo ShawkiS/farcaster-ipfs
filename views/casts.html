@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title><%= username %> Casts</title>
+	<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-800">
+	<div class="container max-w-md mx-auto py-20 text-white">
+		<h1 class="text-8xl text-green-400">
+			<%= username %>
+		</h1>
+		<h1 class="text-8xl pl-40">casts</h1>
+    <ul class="mt-5">
+   <% casts.forEach(({ text, date }) => { %>
+      <li class="mt-5">
+        <p class="text-xs"><%= date %></p>
+        <p class="mt-2 text-xl"><%= text %></p>
+        </li> 
+  <% }); %>
+ 
+    </ul>
+  </div>
+  <script>
+
+  </script>
+</body>
+</html>
